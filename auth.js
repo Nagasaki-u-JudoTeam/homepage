@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // 秘密モードで認証
       sessionStorage.setItem("authStatus", "secret");
       sessionStorage.setItem("authTime", Date.now().toString());
-      if (currentPage === "index.html") {
+      if (currentPage === "index.html" || currentPage === "" || currentPage === undefined) {
         showSecretAnimation();
       }
     } else {
