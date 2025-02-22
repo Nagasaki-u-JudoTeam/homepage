@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--レスポンシブデザイン-->
+    <title>長崎大学柔道部</title>
+    <meta name="description" content="このホームページは、HTMLとCSS、Javascriptを使ったサンプルサイトです。基本的なHTMLタグ打ちの練習用として作成されました。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/cat.png" type="image/x-icon">
+
+    <script src="auth.js" defer></script>
+    <style>
+        /* オーバーレイ用のスタイル（必要に応じてCSSファイル化してもOK） */
+        #secretOverlay {
+          position: fixed;    /* 画面に固定 */
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: linear-gradient(to bottom right, #fff1f3, #ffd1dc);
+          display: flex;     /* 中央寄せ用 */
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;     /* ページ上で一番上に重なるように */
+        }
+        #secretOverlay img {
+          max-width: 100%;
+          height: auto;
+          cursor: pointer;   /* クリック可能とわかるようポインタに */
+        }
+      </style>
+</head>
+<body>
+    <!-- ロゴとヘッダーメニュー -->
+    <header>
+        <div class="logo-container"> 
+            <a href="index.html">
+                <img src="img/N_judo_logo.png" alt="柔道のロゴ" class="judo-logo"> 
+            </a>
+            <img src="img/nagasaki_cat.png" alt="猫のロゴ" class="neko-logo">
+
+        </div>
+        <div class="header-right">
+            <!-- アイコン用コンテナ -->
+            <div class="social-icons">
+                <a href="https://www.instagram.com/nagasaki_judo/?hl=ja" target="_blank" aria-label="Instagram">
+                    <img src="img/Insta_logo.png" alt="Instagram" class="icon">
+                </a>
+                <a href="https://x.com/nujudoclub" target="_blank" aria-label="X">
+                    <img src="img/X_logo.png" alt="X" class="icon">
+                </a>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav>
+                <ul id="menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="member.html">部員紹介</a></li>
+                    <li><a href="result.html">過去の成績</a></li>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <body_c>
+        <!-- ヘッダー下の紺色ライン -->
+        <hr class="blue-line">
+        <div class="black-section">
+            <div class="aspect-ratio-box">
+                <!-- スライドショーコンテナ -->
+                <div class="slideshow-container">
+                    <!-- 各スライド(画像)を用意 -->
+                    <div class="slide">
+                        <img src="img/judoteam1.jpg" alt="team1">
+                    </div>
+                    <div class="slide">
+                        <img src="img/judoteam2.jpg" alt="team2">
+                    </div>
+                    <div class="slide">
+                        <img src="img/judoteam3.jpg" alt="team3">
+                    </div>
+                    <div class="slide">
+                        <img src="img/judoteam4.jpg" alt="team4">
+                    </div>
+                    <div class="slide">
+                        <img src="img/judoteam5.jpg" alt="team5">
+                    </div>
+                    <div class="slide">
+                        <img src="img/judoteam6.jpg" alt="team6">
+                    </div>
+                    <div class="slide">
+                        <img src="img/judoteam7.jpg" alt="team7">
+                    </div>
+
+
+                    <!-- 左右に◀ / ▶ボタン -->
+                    <a class="prev" onclick="changeSlide(-1,true)">&#10094;</a>
+                    <a class="next" onclick="changeSlide(1,true)">&#10095;</a>
+                </div>
+            </div>
+        </div>
+        <hr class="blue-line">
+        
+        <div class="contents">
+            <div class="lead">
+                <div class="N_judo">
+                    <p>こんにちは！長崎大学柔道部です。
+                        <br>男女・初心者から経験者・留学生まで様々な学生が所属しています。
+                        <br>練習だけではなく、長大祭の出店やレクリエーションなどイベント事にも注力！
+                        <br>
+                        <br>部員構成：男子27名　女子5名 (2024年度)
+                        <br><b>水曜金曜 18:00～　長崎大学文教キャンパス総合体育館柔道場</b>
+                        <br>
+                        <br>ご興味がある方は <a href="https://www.instagram.com/nagasaki_judo/" target="_blank" class="dm-link">InstagramのDM</a>からお問い合わせください。
+                    </p>
+                </div>
+                <div class="N_judo-images">
+                    <img src="img/practice1.jpg" alt="練習風景1">
+                    <img src="img/practice2.jpg" alt="練習風景2">
+                    <img src="img/practice3.jpg" alt="練習風景3">
+                </div>
+
+            </div>
+
+
+
+            <div class="urakami">
+                <div class="urakami-wrapper">
+                    <!-- 左側のテキスト部分 -->
+                    <div class="urakami-text">
+                        <h3>浦上柔道クラブとの連携</h3>
+                        <p>
+                            長大柔道部は、地域の小中学生が所属する「浦上柔道クラブ」と連携しています。<br>
+                            経験者はコーチとして、初心者は柔道の基礎を学ぶ機会として練習に参加しています。<br>
+                            子どもたちの元気いっぱいな姿に、私たち大学生も刺激をもらっています。<br>
+                            <br>
+                            月曜木曜 18:00～　長崎大学文教キャンパス総合総合体育館柔道場<br>
+                            <a href="https://www.instagram.com/urakami_judoclub/?locale=ja_JP" 
+                                target="_blank" 
+                                class="dm-link">
+                                浦上柔道クラブInstagram
+                            </a>
+                        </p>
+                    </div>
+                    <div class="urakami-images">
+                        <img src="img/urakami.jpg" alt="浦上柔道クラブ写真1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body_c>
+
+    <footer>
+        <div class="footer-container">
+            <!-- 左カラム -->
+            <div class="footer-left">
+                <div class="footer-left-left">
+                    <!-- 左上にロゴ -->
+                    <div class="footer_logo">
+                        <img src="img/judo_footerlogo.png" alt="フッター用柔道部ロゴ" class="judo_footerlogo">
+                    </div>          
+                    <!-- 左下にSNSアイコン -->
+                    <div class="footer-icons">
+                        <a href="https://www.instagram.com/nagasaki_judo/" target="_blank">
+                            <img src="img/Insta_logo.png" alt="Instagram" />
+                        </a>
+                        <a href="https://x.com/nujudoclub" target="_blank">
+                            <img src="img/X_logo.png" alt="X" />
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-left-right">
+                    <img src="img/judo_logo3.png" alt="猫のロゴ" class="neko-nage">
+                </div>
+            </div>
+
+    
+            <!-- 右カラム（リンク） -->
+            <div class="footer-right">
+                <ul class="footer-links">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="member.html">部員紹介</a></li>
+                    <li><a href="result.html">過去の成績</a></li>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </div>
+        </div>
+    
+        <!-- 下部の区切り線 -->
+        <hr class="footer-line">
+        <!-- コピーライト等のメッセージ -->
+        <p class="footer-end">
+            © 2025 Nagasaki University Judo Team. &ensp; All rights reserved.
+        </p>
+    </footer>
+
+        <!-- JavaScript -->
+        <script src="main.js"></script>
+
+    
+
+</body>
+    </html>

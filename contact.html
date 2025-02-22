@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ - 長崎大学柔道部</title>
+    <meta name="description" content="長崎大学柔道部へのお問い合わせページです。メールフォームからお問い合わせいただけます。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/cat.png" type="image/x-icon">
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="logo-container"> 
+            <a href="index.html">
+                <img src="img/N_judo_logo.png" alt="柔道のロゴ" class="judo-logo"> 
+            </a>
+            <img src="img/nagasaki_cat.png" alt="猫のロゴ" class="neko-logo">
+        </div>
+        <div class="header-right">
+            <div class="social-icons">
+                <a href="https://www.instagram.com/nagasaki_judo/?hl=ja" target="_blank" aria-label="Instagram">
+                    <img src="img/Insta_logo.png" alt="Instagram" class="icon">
+                </a>
+                <a href="https://x.com/nujudoclub" target="_blank" aria-label="X">
+                    <img src="img/X_logo.png" alt="X" class="icon">
+                </a>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav>
+                <ul id="menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="member.html">部員紹介</a></li>
+                    <li><a href="result.html">過去の成績</a></li>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <hr class="blue-line"><!-- デザイン用のライン（CSSで調整） -->
+
+        <!-- お問い合わせメッセージ -->
+        <div class="contact-notice">
+            <p>
+                メールでのお問い合わせは対応に最大1カ月程度かかることがあります。<br>
+                <a href="https://www.instagram.com/nagasaki_judo/" target="_blank" class="dm-link">
+                    InstagramのDM
+                </a>
+                が早く確実であるため是非ご利用ください。
+            </p>
+        </div>
+
+
+
+        <!-- メールフォーム -->
+        <section class="contact-form-section">
+            <h2>メールフォーム</h2>
+            <!-- actionをPHPファイルへ指定 -->
+                <form action="contact_confirm.php" method="post" class="contact-form">
+
+                <div class="form-group">
+                <label for="email">メールアドレス <span style="color: red;">*</span></label>
+                <input 
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="example@domain.com"
+                    required
+                />
+                </div>
+        
+                <div class="form-group">
+                <label for="message">お問い合わせ内容 <span style="color: red;">*</span></label>
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    placeholder="お問い合わせ内容をこちらに入力してください"
+                    required
+                ></textarea>
+                </div>
+        
+                <div class="form-group">
+                    <button type="submit" class="submit-button">送信内容の確認</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-container">
+            <!-- 左カラム -->
+            <div class="footer-left">
+                <div class="footer-left-left">
+                    <!-- 左上にロゴ -->
+                    <div class="footer_logo">
+                        <img src="img/judo_footerlogo.png" alt="フッター用柔道部ロゴ" class="judo_footerlogo">
+                    </div>          
+                    <!-- 左下にSNSアイコン -->
+                    <div class="footer-icons">
+                        <a href="https://www.instagram.com/nagasaki_judo/" target="_blank">
+                            <img src="img/Insta_logo.png" alt="Instagram" />
+                        </a>
+                        <a href="https://x.com/nujudoclub" target="_blank">
+                            <img src="img/X_logo.png" alt="X" />
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-left-right">
+                    <img src="img/cat.png" alt="猫のロゴ" class="neko-nage">
+                </div>
+            </div>
+
+    
+            <!-- 右カラム（リンク） -->
+            <div class="footer-right">
+                <ul class="footer-links">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="member.html">部員紹介</a></li>
+                    <li><a href="result.html">過去の成績</a></li>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </div>
+        </div>
+    
+        <!-- 下部の区切り線 -->
+        <hr class="footer-line">
+        <!-- コピーライト等のメッセージ -->
+        <p class="footer-end">
+            © 2025 Nagasaki University Judo Team. &ensp; All rights reserved.
+        </p>
+    </footer>
+
+    
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+
+    
+</body>
+</html>
+
+

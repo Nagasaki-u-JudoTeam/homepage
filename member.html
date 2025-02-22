@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部員紹介 - 長崎大学柔道部</title>
+  <meta name="description" content="長崎大学柔道部の部員紹介。">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="img/cat.png" type="image/x-icon">
+  <script src="auth.js" defer></script>
+</head>
+
+<body>
+<!-- ロゴとヘッダーメニュー -->
+<header>
+    <div class="logo-container"> 
+        <a href="index.html">
+            <img src="img/N_judo_logo.png" alt="柔道のロゴ" class="judo-logo"> 
+        </a>
+        <img src="img/nagasaki_cat.png" alt="猫のロゴ" class="neko-logo">
+
+    </div>
+    <div class="header-right">
+        <!-- アイコン用コンテナ -->
+        <div class="social-icons">
+            <a href="https://www.instagram.com/nagasaki_judo/?hl=ja" target="_blank" aria-label="Instagram">
+                <img src="img/Insta_logo.png" alt="Instagram" class="icon">
+            </a>
+            <a href="https://x.com/nujudoclub" target="_blank" aria-label="X">
+                <img src="img/X_logo.png" alt="X" class="icon">
+            </a>
+        </div>
+
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="member.html">部員紹介</a></li>
+                <li><a href="result.html">過去の成績</a></li>
+                <li><a href="access.html">アクセス</a></li>
+                <li><a href="contact.html">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="body_c">
+    <hr class="blue-line">
+    <div class="member_contents">
+        <main id="members"></main>
+    </div>
+</div>
+
+
+<footer>
+    <div class="footer-container">
+        <!-- 左カラム -->
+        <div class="footer-left">
+            <div class="footer-left-left">
+                <!-- 左上にロゴ -->
+                <div class="footer_logo">
+                    <img src="img/judo_footerlogo.png" alt="フッター用柔道部ロゴ" class="judo_footerlogo">
+                </div>          
+                <!-- 左下にSNSアイコン -->
+                <div class="footer-icons">
+                    <a href="https://www.instagram.com/nagasaki_judo/" target="_blank">
+                        <img src="img/Insta_logo.png" alt="Instagram" />
+                    </a>
+                    <a href="https://x.com/nujudoclub" target="_blank">
+                        <img src="img/X_logo.png" alt="X" />
+                    </a>
+                </div>
+            </div>
+            <div class="footer-left-right">
+                <img src="img/judo_logo3.png" alt="猫のロゴ" class="neko-nage">
+            </div>
+        </div>
+
+
+        <!-- 右カラム（リンク） -->
+        <div class="footer-right">
+            <ul class="footer-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="member.html">部員紹介</a></li>
+                <li><a href="result.html">過去の成績</a></li>
+                <li><a href="access.html">アクセス</a></li>
+                <li><a href="contact.html">お問い合わせ</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 下部の区切り線 -->
+    <hr class="footer-line">
+    <!-- コピーライト等のメッセージ -->
+    <p class="footer-end">
+        © 2025 Nagasaki University Judo Team. &ensp; All rights reserved.
+    </p>
+</footer>
+
+
+<script>
+    // 1) Web公開したスプレッドシートのCSV出力URL
+    //    (実際のURLに置き換えてください)
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSaPNuTCNZkEJNfJ1PHA45yPyibqFnRoPbrEAJdrFm26Q5N_5godEooNoE70f2iTZzHmbszqzJUYO2v/pub?output=csv";
+  
+    // 2) CSVをfetch & テキスト化
+    async function fetchMembers() {
+      const response = await fetch(CSV_URL);
+      const csvText = await response.text();
+      return parseCsv(csvText);
+    }
+  
+    // 3) CSVのパース
+    function parseCsv(csvText) {
+      const lines = csvText.trim().split("\n");
+      // 1行目はヘッダ行 => [学年,ファイル名,氏名,ラベル付き専攻,コメント]
+      const data = lines.slice(1).map(line => {
+        const cols = line.split(",");
+        return {
+          year: cols[0],       // A列: 学年
+          fileName: cols[1],   // B列: 画像ファイル名
+          name: cols[2],       // C列: 氏名
+          labelMajor: cols[3], // D列: "専攻：～"など
+          comment: cols[4],    // E列: コメント
+        };
+      });
+      return data;
+    }
+  
+    // 4) HTML生成
+    function renderMembers(members) {
+      const container = document.getElementById("members");
+  
+      members.forEach(member => {
+        // 学年が空白でなければ見出しを作る
+        if (member.year) {
+          const yearHeading = document.createElement("div");
+          yearHeading.className = "year-heading";
+          yearHeading.textContent = member.year;
+          container.appendChild(yearHeading);
+        }
+  
+        // メンバー要素
+        const wrapper = document.createElement("div");
+        wrapper.className = "member-wrapper";
+  
+        // 写真
+        const imgDiv = document.createElement("div");
+        imgDiv.className = "member-img";
+        const imgElem = document.createElement("img");
+        // 重要: 「member/」フォルダ配下のファイル名を合成
+        imgElem.src = "member/" + member.fileName; 
+        imgElem.alt = member.name;
+        imgDiv.appendChild(imgElem);
+  
+        // 情報
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "member-info";
+  
+        // 名前
+        const nameEl = document.createElement("h2");
+        nameEl.textContent = member.name;
+        infoDiv.appendChild(nameEl);
+  
+        // 専攻 or 趣味など
+        if (member.labelMajor) {
+          const majorEl = document.createElement("p");
+          majorEl.textContent = member.labelMajor;
+          infoDiv.appendChild(majorEl);
+        }
+  
+        // 区切り線
+        const lineEl = document.createElement("div");
+        lineEl.className = "comment-line";
+        infoDiv.appendChild(lineEl);
+  
+        // コメント
+        if (member.comment) {
+          const commentEl = document.createElement("p");
+          commentEl.textContent = member.comment;
+          infoDiv.appendChild(commentEl);
+        }
+  
+        // 組み立て
+        wrapper.appendChild(imgDiv);
+        wrapper.appendChild(infoDiv);
+        container.appendChild(wrapper);
+      });
+    }
+  
+    // 5) 実行フロー
+    (async () => {
+      const membersData = await fetchMembers();
+      renderMembers(membersData);
+    })();
+  </script>
+
+    <div id="backToTop" class="back-to-top" onclick="scrollToTop()">
+    <!-- 好きなアイコンに差し替えてOK。テキストでも可 -->
+        <img src="img/arrow_up.png" alt="トップへ戻る" />
+    </div>
+    
+    <script>
+        // トップへ戻るボタン要素を取得
+        const backToTopBtn = document.getElementById('backToTop');
+      
+        // 画面がスクロールされるたびに呼ばれる処理
+        window.addEventListener('scroll', () => {
+          // 例えば200px以上スクロールしたら表示させる
+          if (window.scrollY > 200) {
+            backToTopBtn.style.display = 'block';
+          } else {
+            backToTopBtn.style.display = 'none';
+          }
+        });
+      
+        // ボタンをクリックしたらスムーズにトップへ戻る
+        function scrollToTop() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      </script>
+
+
+</body>
+    
+<!-- JavaScript -->
+<script src="main.js"></script>
+
+
+
+</html>

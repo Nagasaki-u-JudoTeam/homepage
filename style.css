@@ -1,0 +1,880 @@
+/* 全体のスタイル */
+body {
+    font-family: '游ゴシック', 'Yu Gothic', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* ヘッダー */
+header {
+    background-color: #fff;
+    color: #000;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;/* 左にロゴ、右に「アイコン+ナビコンテナ」 */
+    align-items: center;
+    padding: 0 0px;
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 1000; /* 他の要素の上に表示するため */
+}
+
+/* ロゴコンテナ */
+.logo-container {
+    height: 103.5%;
+    display: flex;
+    align-items: flex-end; 
+    
+}
+.judo-logo {
+    max-height: 130px; 
+    margin-right: 0px;
+    margin-left: 20px; 
+}
+.neko-logo {
+    max-height: 110px; 
+}
+
+
+.header-right {
+    display: flex;
+    flex-direction: column; /* SNSアイコンとナビを上下に並べる */
+    align-items: flex-end;  /* 右寄せ */
+    margin-right: 80px;     /* お好みで余白を調整 */
+}
+
+
+
+/* アイコン用コンテナ */
+.social-icons {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 1rem; 
+    margin-bottom: 10px; /* ナビゲーションとの隙間 */
+    margin-right: 20px;
+}
+.social-icons a {
+    display: inline-block;
+    width: 30px; /* アイコンの幅 */
+    height: 30px; /* アイコンの高さ */
+}
+
+.social-icons img {
+    width: 100%; /* アイコン画像を親要素にフィット */
+    height: auto;
+    transition: transform 0.3s ease; /* ホバー時のアニメーション */
+}
+
+.social-icons a:hover img {
+    transform: scale(1.2); /* ホバー時に拡大 */
+}
+
+
+header nav ul {
+    list-style: none; /* リストの「・」を消す */
+    display: flex;    /* 子要素（<li>）を横並びにする */
+    gap: 1rem;       /* 子要素の間隔を1rem（約16px）空ける */
+    font-family: 'Meiryo', sans-serif; /* フォントを変更,sans-serifはArialがない場合に使用する */
+    font-weight: bold;               /* 太字にする（任意） */
+   
+}
+
+header nav ul li a {
+    display: block;            /* 行全体をリンクにする */
+    text-align: center;        /* テキストを中央寄せ */
+    position: relative; /* 擬似要素を絶対位置で配置するため */
+    color: #112240	;                   /* 通常時の文字色 */
+    text-decoration: none;   /* リンクの下線を消す */
+    padding: 0.5rem;         /* リンク周囲にクリック可能な余白を追加 */
+    transition: color 0.3s ease; /* 文字色の変化をなめらかに */
+    border: none;    /* 行を囲む枠線 */
+}
+
+
+
+/* 擬似要素でラインを作成 */
+header nav ul li a::after {
+    content: ''; /* 擬似要素の内容を空に */
+    position: absolute;
+    bottom: 0; /* テキストの下に配置 */
+    left: 50%; /* ラインを中央からスタート */
+    transform: translateX(-50%) scaleX(0); /* 初期状態では幅0 */
+    transform-origin: center; /* 中央を起点に拡大 */
+    width: 100%; /* ラインの最大幅 */
+    height: 5px; /* ラインの高さ */
+    background-color: #40e0d0; /* ラインの色 */
+    transition: transform 0.3s ease; /* 拡大アニメーション */
+}
+header nav ul li a:hover::after {
+    transform: translateX(-50%) scaleX(1); /* 幅を100%に拡大 */
+}
+
+
+/* ハンバーガーメニューのスタイル */
+.hamburger {
+    font-size: 0;
+    position: absolute; /* 絶対位置で配置 */
+    top: 5px; /* ヘッダーの上からの距離を調整 */
+    right: 10px; /* 右端からの距離を調整 */
+    width: 65px;
+    height: 65px;
+    display: none; /* デフォルトでは非表示 */
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.hamburger span {
+    display: block;
+    width: 65%;
+    height: 2px;
+    background-color: #000;
+    margin: 10px auto; /* 線の間隔を広げる、中央揃え */
+    transition: all 0.3s ease;
+}
+
+
+/* モバイル表示 */
+@media (max-width: 768px) {
+    /* ヘッダーの高さを80pxに変更 */
+    header {
+        height: 80px;
+    }
+
+    .judo-logo {
+        max-height: 70px; 
+        margin-right: 0px;
+        margin-left: 0px; 
+    }
+    .neko-logo {
+        max-height: 55px; 
+    }
+
+    
+    /* 通常のメニューを非表示にする */
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        gap: 0;
+        background-color: #f5f5f5;
+        width: 100%;
+        z-index: 20; /* スライドより前に出すため */
+        margin: 0px;
+        top: 80px;
+    }
+
+    /* モバイル時のnavリンクに黒線を付ける */
+    header nav ul li a {
+        position: static;             /* 擬似要素を使わないようにする */
+        border: none;                 /* デスクトップ時のborderを無効化 */
+        border-bottom: 1px solid #000;/* 1px黒線を下に表示 */
+        padding: 1rem;                /* お好みで調整 */
+    }
+
+    /* メニューが表示される場合のスタイル */
+    header nav ul.active {
+        display: flex;
+    }
+
+    header nav ul li a::after {
+        content: none; /* もしくは display: none; */
+    }
+
+    
+    header nav ul li a:hover {
+        color: #c00;               /* テキスト色を赤にする例 */
+        background-color: #dcdcdc; /* 背景色を薄いグレーに */
+    }
+    header nav ul li a:hover::after {
+        transform: translateX(-50%) scaleX(1); /* 幅を100%に拡大 */
+    }
+
+
+    /* ハンバーガーメニューをモバイル時に表示する */
+    .hamburger {
+        display: block;
+    }
+}
+
+/* ----- 紺色2pxライン ----- */
+hr.blue-line {
+    border: none;            /* デフォルトの線を消す */
+    height: 20px;             /* 太さ2px */
+    background-color: navy;  /* 紺色 */
+    margin: 0;               /* 余白調整 */
+}
+
+/* ----- スライドショー関連 ----- */
+
+
+.black-section {
+    background-color: #000;  /* 黒背景 */
+}
+
+.aspect-ratio-box {
+    background-color: #000;  /* 黒背景 */
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    /* 例えば16:9の比率にしたい場合は高さを 3/4=56.25% */
+    margin: 0 auto;     /* 中央揃え */
+    padding-top: 75%;
+    @media screen and (min-width: 900px) {
+        padding-top: 675px;   /* 900px × 0.75 = 675px で固定 */
+      }
+    }
+  
+  .slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0; 
+    bottom: 0;
+    overflow: hidden;
+  }
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* 画像の初期状態は見えないようにしておく */
+    opacity: 0;
+    transition: opacity 2s ease; /* 2秒かけてフェード */
+  }
+  
+  /* "active" なスライドだけフェードイン（opacity:1） */
+  .slide.active {
+    opacity: 1;
+    z-index: 2; /* 前面に表示 */
+  }
+
+/* 画像は幅100%にして、レスポンシブに対応する */
+.slide img {
+    display: block; /* inline要素の余白を回避するため */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+}
+
+
+/* 左右のナビボタン */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%; /* 上下位置を中央に */
+    width: auto;
+    margin-top: -20px; /* ボタンの高さの半分だけ上にずらして中央揃え */
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+    user-select: none; /* テキストの選択を無効化 */
+    transition: 0.5s;
+    background-color: rgba(0, 0, 0, 0.4); /* 半透明の背景色 */
+    z-index: 10; /* 画像より上に表示 */
+}
+
+/* それぞれ左右どちらに配置するか */
+.prev {
+    left: 10px;
+    border-radius: 3px 0 0 3px; /* 左側だけ角を丸める */
+}
+.next {
+    right: 10px;
+    border-radius: 0 3px 3px 0; /* 右側だけ角を丸める */
+}
+
+/* ホバー時に色を少し変える */
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* モバイル対応でボタンと画像のサイズを調整したい場合の例 */
+@media (max-width: 768px) {
+    .prev, .next {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+
+/* 「contents」全体のレイアウト調整 */
+.contents {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; /* 中央寄せ */
+    margin: 1rem 0;
+}
+
+/* 「lead」クラスに背景色のついたボックスを作成 */
+/* lead全体のボックス */
+.lead {
+    background-color: #f5f5f5;  /* 薄いグレー背景 */
+    border: 2px solid #000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1000px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem; /* 下に要素が続くなら全体の余白を追加 */
+}
+
+/* テキスト部分（.N_judo）との区切りを少し空ける */
+.N_judo {
+    margin-bottom: 2rem; /* テキストブロックの下に余白を作る */
+}
+
+/* テキストの見やすさ */
+.N_judo p {
+    margin: 0;              /* 余白リセット */
+    font-size: 1.2rem;      /* 文字サイズ */
+    line-height: 1.8;       /* 行間 */
+    color: #000;            /* 文字色 */
+}
+
+/* DMリンク（.dm-link）の既存スタイル */
+.lead a.dm-link {
+    color: #1a73e8;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* 画像部分（.N_judo-images）を横並びに */
+.N_judo-images {
+    display: flex;          /* フレックスコンテナ */
+    justify-content: center;/* 水平中央揃え */
+    gap: 1rem;              /* 画像間の余白 */
+    flex-wrap: wrap;        /* 画面が狭い時は折り返し */
+}
+
+/* 各画像の基本設定 */
+.N_judo-images img {
+    width: 30%;             /* 3枚並べる想定: 横幅を30%ほど */
+    max-width: 350px;       /* 大きすぎないよう制限 */
+    height: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+    .N_judo-images img {
+        width: 45%;
+        max-width: none; /* 必要に応じて外す */
+    }
+}
+@media (max-width: 480px) {
+    .N_judo-images img {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+
+.urakami {
+    /* 全体を囲むボックス */
+    width: 85%;
+    max-width: 1200px; /* お好みで調整 */
+    margin-bottom: 2rem;
+    background-color: #fff; /* 上の .lead とは別の薄色 */
+    border: 1.5px dashed #666;   /* デザインを変える: dashedなど */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+}
+
+.urakami-wrapper {
+    /* テキストと画像を横並びにする */
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start; /* テキストと画像の上揃え */
+    justify-content: space-between;
+}
+
+/* テキストを左側に配置 */
+.urakami-text {
+    flex: 1;             /* 幅をできるだけ広げる */
+    margin-right: 1rem;
+}
+
+.urakami-text h3 {
+    margin-top: 0;       /* h3上の余白をなくす */
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem; 
+}
+
+.urakami-text p {
+    line-height: 1.6;
+    margin: 0;           /* pのデフォルト余白リセット */
+    color: #333;
+    font-size: 1rem;
+}
+
+/* 画像を右側に2枚並べる(縦に) */
+.urakami-images {
+    display: flex;
+    gap: 1rem;             /* 画像の間の余白 */
+    max-width: 250px;      /* 画像領域の最大幅 */
+}
+
+/* 画像のスタイル */
+.urakami-images img {
+    width: 100%;          /* 親要素に合わせる */
+    height: auto;
+    object-fit: cover;    /* お好みで調整 */
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* =========================================
+   3. レスポンシブ対応
+   768px以下の時、縦並びに切り替え
+========================================= */
+@media (max-width: 768px) {
+    .urakami-wrapper {
+        flex-direction: column;   /* 全て縦並び */
+        align-items: center;
+    }
+
+    .urakami-images {
+        max-width: 100%;         /* 画像横幅を確保 */
+        flex-direction: row;     /* スマホ時には横並びにするなども可 */
+        flex-wrap: wrap;         /* 行が足りなくなったら折り返す */
+        justify-content: center;
+    }
+
+    .urakami-images img {
+        max-width: 50%; /* 2枚横並びなら幅を調整 */
+    }
+}
+
+/* フッター全体 */
+footer {
+    background-color: #000060;  /* ネイビー */
+    color: #fff;               /* テキストは白 */
+    padding: 2rem 1rem;        /* 上下左右の余白 */
+    font-size: 1rem;
+    text-align: center;        /* フッター終端の文言などは中央揃え */
+    font-family: 'Meiryo', sans-serif; /* フォントを変更 */
+}
+
+/* フッター内部コンテナ */
+.footer-container {
+    display: flex;
+    max-width: 1500px;       /* 横幅の最大制限 */
+    margin: 0 auto;          /* 中央寄せ */
+    padding: 0 2rem 0 2rem;         /* 左右の余白（寄せすぎ防止） */
+    justify-content: space-between; /* 左右に分かれて配置 */
+    align-items: flex-start;        /* 上揃え */
+}
+
+.judo_footerlogo {
+    max-height: 100px; 
+    margin-bottom: 30px;
+}
+
+
+
+/* 左カラム全体を横並びに */
+.footer-left {
+    display: flex;         /* 横並びにする */
+    flex-direction: row;
+    align-items: flex-start;  /* 上揃え or center にしたいなら調整 */
+}
+  
+  /* 柔道ロゴ＋SNSアイコンの縦配置 */
+  .footer-left-left {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    text-align: left;  /* ロゴやアイコンを左寄せ */
+    min-height: 150px; /* SNSアイコンが下に来るよう高さを確保 */
+}
+  
+  /* 猫投げロゴだけを右に置く */
+  .footer-left-right {
+    display: flex; 
+    align-items: flex-end;  /* ロゴの高さに合わせて下寄せしたいなら工夫 */
+}
+
+  .neko-nage{
+    max-height: 170px;
+}
+
+/* 縦並びのリンク */
+.footer-links {
+    flex-direction: column;
+    list-style: none;        /* リストの丸を消す */
+    margin: 0;
+    text-align: left;        /* リンクを左寄せ(お好みで) */
+}
+
+
+
+
+/* 各リンク */
+.footer-links li {
+    margin: 0.5rem 0;        /* リンクの上下余白 */
+}
+
+/* aタグのデザイン */
+.footer-links a {
+    color: #fff;             /* 白文字 */
+    text-decoration: none;   /* 下線を消す */
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    opacity: 0.7;            /* ホバー時に少し透明に */
+}
+
+/* SNSアイコン */
+.footer-icons {
+    display: flex;
+    flex-direction: row;    /* 横並び */
+    gap: 1rem;
+    margin-top: auto;       /* 上の要素から余ったスペースを使い、アイコンを下寄せ */
+    margin-left: 10px;
+}
+
+.footer-icons a img {
+    width: 35px;             /* アイコンのサイズ */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.footer-icons a:hover img {
+    transform: scale(1.2);   /* ホバー時に拡大 */
+}
+
+/* 下部の区切り線 */
+.footer-line {
+    border: none;            /* デフォルト線を消し、独自背景を使う */
+    height: 2px;             /* 太さ */
+    background-color: #fff;  /* 白色の線 */
+    margin: 1rem auto;       /* 上下に余白を作りつつ中央 */
+}
+
+/* コピーライト文言 */
+.footer-end {
+    margin: 0;               /* 余白リセット(お好みで調整) */
+    font-size: 0.9rem;
+    margin-top: 1rem;        /* 線との隙間 */
+}
+
+/* --- レスポンシブ対応 --- */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;  /* スマホ等では縦並び */
+        align-items: center;
+        padding: 0 2rem;        /* 画面幅が狭い時用に余白を調整 */
+    }
+
+    /* 左カラムと右カラムを上下に配置 */
+    .footer-left, .footer-right {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .img.neko-logo{
+        height: 100px;
+        /* ここは猫のイラストができたら変える */
+    }
+    
+    .footer-icons {
+        margin-top: 1rem;
+        justify-content: center;
+    }
+}
+
+
+.ac_contents{
+    padding: 0 10px;
+}
+
+
+.access-title h2 {
+    margin: 20px auto; /* 上下に20pxの余白、中央寄せ */
+    padding-left: 20px; /* 左に20pxの内側余白を追加 */
+    text-align: left; /* テキストを左揃え */
+}
+
+.map-wrapper {
+    position: relative;
+    width: 85%;
+    margin: 50px auto;
+    padding: 10px;
+    border: 1px solid #ccc;           /* 枠線 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影 */
+    border-radius: 8px;              /* 角を丸く */
+    background-color: #fff;          /* 背景色を白に */
+    overflow: hidden;                /* 子要素がはみ出さないようにする */
+}
+
+  /* アスペクト比を調整するための内部コンテナ */
+  .map-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9のアスペクト比を確保したい場合 */
+}
+
+  .map-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0; /* 枠線を消す場合 */
+}
+  
+.contact-notice {
+    margin: 20px auto;
+    max-width: 600px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.contact-notice .dm-link {
+    color: #0047ab;  /* リンク色をブルー系に */
+    text-decoration: underline;
+}
+
+.contact-form-section {
+    margin: 40px auto;
+    padding: 0px 10px;
+    max-width: 600px;
+    text-align: left;
+}
+.contact-form-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 各フォーム要素の間隔 */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-group input[type="email"],
+.form-group textarea {
+    border: 1px solid #000; /* 黒枠線 */
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    border: 1px solid #0047ab; /* フォーカス時の枠線色を変える */
+}
+
+.submit-button {
+    background-color: #1e90ff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #003a91; /* ボタンホバー時の色変化 */
+}
+
+
+
+.member_contents {
+    max-width: 750px; 
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+.year-heading {
+display: flex;          /* flexレイアウト */
+align-items: center;    /* 縦方向中央寄せ */
+justify-content: center;/* 横方向中央寄せ(テキストのある部分だけ拡がる) */
+margin: 10px 0;
+font-weight: bold;
+font-size: 1.2rem;
+}
+
+/* 左右の線を疑似要素として作るのではなく、before/after でflex-itemにする */
+.year-heading::before,
+.year-heading::after {
+content: "";
+flex: 1;               /* 残りスペースをすべて埋める */
+height: 3px;
+background: #000;   /* 線色 */
+margin: 0 10px;    
+}
+
+
+
+.member-wrapper {
+  display: flex;
+  margin: 30px 0;
+}
+.member-img {
+  flex: 0 0 auto;
+  width: 200px; /* 写真の表示サイズ */
+  margin-left: 35px;
+  margin-right: 20px;
+}
+.member-img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.member-info {
+  flex: 1;
+  padding-top: 20px;
+}
+
+/* ▼ トップへ戻るボタン (CSS) ▼ */
+.back-to-top {
+    position: fixed;       /* 画面に固定表示 */
+    bottom: 40px;          /* 画面下からの距離 */
+    right: 40px;           /* 画面右からの距離 */
+    display: none;         /* 初期状態は非表示 */
+    width: 50px;           /* アイコンサイズ */
+    height: 50px;          /* アイコンサイズ */
+    cursor: pointer;       /* カーソルをポインタに */
+    z-index: 9999;         /* 前面にくるように値を大きくする */
+    /* 背景色や余白などお好みで */
+}
+  .back-to-top img {
+    width: 100%;
+    height: auto;
+}
+
+.comment-line {
+  border-top: 2px solid #ccc;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+@media (max-width: 600px) {
+    .member-img {
+        flex: 0 0 auto;
+        width: 160px; /* 写真の表示サイズ */
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    .comment-line {
+        margin-top: 10px;
+    }
+}
+
+
+
+
+
+/* 大会結果用セクション・・・・・・・・・・・・・ */
+.tournament-result {
+    max-width: 950px;        /* 幅が広い場合の最大幅 */
+    width: calc(100% - 20px);
+    box-sizing: border-box;  /* paddingを含めて幅計算 */
+    margin: 2rem auto;       /* 上下2rem、左右autoで中央寄せ */
+    padding: 1rem 12px;      /* 1remの上下余白 + 左右10pxの余白 */
+    border: 2.5px solid #000;  /* 黒枠 */
+  }
+  
+  /* タイトル */
+  .tournament-result h2 {
+    font-size: 1.4rem;    /* お好みで調整 */
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 日付・会場をやや小さめに */
+  .tournament-result .date-venue {
+    text-decoration:underline;
+  }
+  
+  /* 画像を並べるコンテナ */
+  .result-images {
+    /* PCなど横幅が十分にある場合は2×2のグリッドに */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列 */
+    gap: 1rem;                             /* 写真の間隔 */
+    justify-items: center;                 /* 画像を中央寄せ */
+    margin-top: 1.5rem;
+  }
+  
+  /* 画像自体を幅450pxに固定 */
+  .result-images img {
+    width: 450px;
+    height: auto;
+    display: block; /* 余計な隙間対策 */
+  }
+  
+.result-images2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列にする */
+    gap: 1rem;                             /* 写真の間隔 */
+    justify-items: center;                 /* 画像を中央寄せ */
+    margin-top: 1.5rem;
+ }
+.result-images2 img{
+    max-height: 330px;
+}
+
+
+  /* レスポンシブ対応
+     スマホなど幅が狭い環境では4枚横並び（幅450px × 4 = 1800px）を実現し、
+     画面が狭い場合は横スクロールで見る形に */
+  @media screen and (max-width: 768px) {
+    .result-images {
+      /* グリッドをやめて横1列に並べる */
+      display: flex;
+      flex-wrap: nowrap;       /* 折り返さない */
+      overflow-x: auto;        /* はみ出た場合は横スクロール */
+      gap: 1rem;
+      /* paddingやmarginを調整したい場合はここで指定 */
+    }
+    .result-images img {
+      /* 画像幅450pxをキープ */
+      flex: 0 0 auto;   /* 縮小されないように幅を固定する */
+    }
+
+    .result-images2 {
+        /* グリッドをやめて横1列に並べる */
+        display: flex;
+        flex-wrap: nowrap;       /* 折り返さない */
+        overflow-x: auto;        /* はみ出た場合は横スクロール */
+        gap: 1rem;
+        /* paddingやmarginを調整したい場合はここで指定 */
+      }
+      .result-images2 img {
+        /* 画像幅450pxをキープ */
+        flex: 0 0 auto;   /* 縮小されないように幅を固定する */
+      }
+  }
+  
