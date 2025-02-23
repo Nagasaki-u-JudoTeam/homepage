@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせ - 長崎大学柔道部</title>
-    <meta name="description" content="長崎大学柔道部へのお問い合わせページです。メールフォームからお問い合わせいただけます。">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="img/cat.png" type="image/x-icon">
-    <script src="auth.js" defer></script>
+  <meta charset="UTF-8">
+  <title>お問い合わせ - 長崎大学柔道部</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="img/icon-cat.png" type="image/icon">
 </head>
 <body>
     <!-- ヘッダー -->
@@ -59,38 +57,36 @@
             </p>
         </div>
 
-
-
         <!-- メールフォーム -->
         <section class="contact-form-section">
             <h2>メールフォーム</h2>
-            <!-- actionをPHPファイルへ指定 -->
-                <form action="contact_confirm.php" method="post" class="contact-form">
-
+            
+            <!-- action, methodを直接指定せずJSで送信を制御 -->
+            <form id="contact-form" class="contact-form">
                 <div class="form-group">
-                <label for="email">メールアドレス <span style="color: red;">*</span></label>
-                <input 
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="example@domain.com"
-                    required
-                />
+                    <label for="email">メールアドレス <span style="color: red;">*</span></label>
+                    <input 
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="example@domain.com"
+                        required
+                    />
                 </div>
         
                 <div class="form-group">
-                <label for="message">お問い合わせ内容 <span style="color: red;">*</span></label>
-                <textarea
-                    id="message"
-                    name="message"
-                    rows="6"
-                    placeholder="お問い合わせ内容をこちらに入力してください"
-                    required
-                ></textarea>
+                    <label for="message">お問い合わせ内容 <span style="color: red;">*</span></label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        placeholder="お問い合わせ内容をこちらに入力してください"
+                        required
+                    ></textarea>
                 </div>
         
                 <div class="form-group">
-                    <button type="submit" class="submit-button">送信内容の確認</button>
+                    <button type="submit" class="submit-button">送信</button>
                 </div>
             </form>
         </section>
@@ -120,7 +116,6 @@
                     <img src="img/cat.png" alt="猫のロゴ" class="neko-nage">
                 </div>
             </div>
-
     
             <!-- 右カラム（リンク） -->
             <div class="footer-right">
@@ -142,12 +137,54 @@
         </p>
     </footer>
 
-    
-    <!-- JavaScript -->
+    <!-- メインJS -->
     <script src="main.js"></script>
 
-    
+    <!-- ★ フォーム送信用スクリプト ★ -->
+    <script>
+    const form = document.getElementById('contact-form');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault(); // 標準のフォーム送信をキャンセル
+
+      // 1) フォームデータを取得
+      const formData = new FormData(form);
+
+      // 2) FormspreeのエンドポイントURL（自分のフォームURLに変更）
+      const formspreeUrl = 'https://formspree.io/f/xzzdwnar';
+
+      try {
+        // 3) fetch で送信
+        const response = await fetch(formspreeUrl, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'  // JSONでのレスポンスを期待
+          }
+        });
+
+        // 4) レスポンスが正常かどうかをチェック
+        if (response.ok) {
+          // 送信成功
+          alert('送信が完了しました。\nトップページに戻ります。');
+          window.location.href = 'index.html'; // index.htmlへリダイレクト
+        } else {
+          // 送信失敗（Formspreeのエラーレスポンスが返ってきた場合）
+          const data = await response.json();
+          if (data && data.errors) {
+            // Formspreeのバリデーションエラーなど
+            alert('送信エラー:\n' + data.errors.map(e => e.message).join('\n'));
+          } else {
+            // その他のエラー
+            alert('送信に失敗しました。\n時間を置いて再度お試しください。');
+          }
+        }
+      } catch (error) {
+        // ネットワークエラー等でfetchに失敗した場合
+        console.error('通信エラー:', error);
+        alert('送信に失敗しました。\n通信環境を確認の上、再度お試しください。');
+      }
+    });
+    </script>
 </body>
 </html>
-
-
