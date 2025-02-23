@@ -146,12 +146,13 @@ header nav ul li a:hover::after {
     }
 
     .judo-logo {
-        max-height: 70px; 
+        max-height: 74px; 
         margin-right: 0px;
         margin-left: 0px; 
     }
     .neko-logo {
-        max-height: 55px; 
+        max-height: 60px;
+        margin-left: -6px;
     }
 
     
