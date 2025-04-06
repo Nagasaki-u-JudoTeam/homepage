@@ -1,0 +1,3 @@
+Sitemap: https://nagasaki-u-judoteam.github.io/homepage/sitemap.xml
+User-agent: *
+Disallow:
