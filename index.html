@@ -98,37 +98,12 @@
     </header>
     
     <body_c>
-        <!-- ヘッダー下の紺色ライン -->
-        <hr class="blue-line">
+        <!-- ヘッダー下の紺色ラインはヘッダーの border-bottom に統合済み -->
         <div class="black-section">
             <div class="aspect-ratio-box">
                 <!-- スライドショーコンテナ -->
-                <div class="slideshow-container">
-                    <!-- 各スライド(画像)を用意 -->
-                    <div class="slide">
-                        <img src="img/judoteam1.jpg" alt="柔道部の集合写真1">
-                    </div>
-                    <div class="slide">
-                        <img src="img/judoteam2.jpg" alt="柔道部の集合写真">
-                    </div>
-                    <div class="slide">
-                        <img src="img/judoteam3.jpg" alt="柔道部の集合写真3">
-                    </div>
-                    <div class="slide">
-                        <img src="img/judoteam4.jpg" alt="柔道部の集合写真4">
-                    </div>
-                    <div class="slide">
-                        <img src="img/judoteam5.jpg" alt="柔道部の集合写真5">
-                    </div>
-                    <div class="slide">
-                        <img src="img/judoteam6.jpg" alt="柔道部の集合写真6">
-                    </div>
-                    <div class="slide">
-                        <img src="img/judoteam7.jpg" alt="柔道部の集合写真7">
-                    </div>
-
-
-                    <!-- 左右に◀ / ▶ボタン -->
+                <div class="slideshow-container" id="slideshow-container">
+                    <!-- slides は main.js が slideshow.json を読んで動的に生成 -->
                     <a class="prev" onclick="changeSlide(-1,true)">&#10094;</a>
                     <a class="next" onclick="changeSlide(1,true)">&#10095;</a>
                 </div>
@@ -148,6 +123,9 @@
                         <br>
                         <br>ご興味がある方は <a href="https://www.instagram.com/nagasaki_judo/" rel="me" target="_blank" class="dm-link">InstagramのDM</a>からお問い合わせください。
                     </p>
+                    <a href="https://www.instagram.com/nagasaki_judo/" rel="me" target="_blank" class="cta-button">
+                        見学・入部のお問い合わせ
+                    </a>
                 </div>
                 <div class="N_judo-images">
                     <img src="img/practice1.jpg" alt="長崎大学柔道部メンバーが練習している様子1">

@@ -1,0 +1,42 @@
+name: スライドショー JSON 自動生成
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'img/slideshow/**'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: slideshow.json を生成
+        run: |
+          python3 - <<'EOF'
+          import os, json
+
+          folder = "img/slideshow"
+          exts = {".jpg", ".jpeg", ".png", ".webp"}
+          files = sorted(
+              f for f in os.listdir(folder)
+              if os.path.splitext(f)[1].lower() in exts
+          )
+          with open("slideshow.json", "w", encoding="utf-8") as fp:
+              json.dump(files, fp, ensure_ascii=False, indent=2)
+          print(f"生成完了: {len(files)} 枚")
+          print(files)
+          EOF
+
+      - name: slideshow.json をコミット & プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add slideshow.json
+          git diff --staged --quiet && echo "変更なし" || \
+            (git commit -m "chore: slideshow.json を自動更新" && git push)

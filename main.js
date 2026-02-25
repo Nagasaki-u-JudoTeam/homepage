@@ -1,3 +1,33 @@
+// --- スクロールリビール (Scroll Reveal) ---
+document.addEventListener("DOMContentLoaded", function () {
+    // リビール対象に reveal クラスを JS で付与（JS 無効時は非表示にならない）
+    document.querySelectorAll('.lead, .urakami').forEach(el => {
+        el.classList.add('reveal');
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+});
+
+// --- ナビゲーション：現在ページのアクティブ表示 ---
+document.addEventListener("DOMContentLoaded", function () {
+    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('header nav ul li a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentFile || (!currentFile && href === 'index.html')) {
+            link.classList.add('nav-active');
+        }
+    });
+});
+
 // --- ハンバーガーメニュー関連 ---
 document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById('hamburger');
@@ -15,49 +45,56 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
+// --- 動的スライドショー (slideshow.json から画像を読み込み) ---
+(async function initSlideshow() {
+    const container = document.getElementById('slideshow-container');
+    if (!container) return; // index.html 以外のページでは何もしない
+
+    // slideshow.json を取得（キャッシュ回避のクエリ付き）
+    let images = [];
+    try {
+        const res = await fetch('slideshow.json?v=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        images = await res.json();
+    } catch (e) {
+        console.warn('slideshow.json の読み込みに失敗しました:', e);
+        return;
+    }
+    if (images.length === 0) return;
+
+    // ナビボタンの手前に slide 要素を動的に生成
+    const prevBtn = container.querySelector('.prev');
+    images.forEach((filename, i) => {
+        const div = document.createElement('div');
+        div.className = 'slide' + (i === 0 ? ' active' : '');
+        const img = document.createElement('img');
+        img.src = 'img/slideshow/' + filename;
+        img.alt = '柔道部の集合写真' + (i + 1);
+        div.appendChild(img);
+        container.insertBefore(div, prevBtn);
+    });
+
+    // スライド制御
     let slideIndex = 0;
-    const slides = document.getElementsByClassName("slide");
+    const slides = container.getElementsByClassName('slide');
     const totalSlides = slides.length;
+    let autoSlideTimer;
 
-    let autoSlideTimer; // setIntervalのIDを保持
-
-    // 最初のスライドを表示
-    slides[slideIndex].classList.add("active");
-
-    // 自動切り替え用の関数
-    function showNextSlide() {
-        changeSlide(1, false); 
-        // 第二引数をfalseにすることで「手動ではない」ことを示す
-    }
-
-    // 前後にスライド切り替えする共通関数
-    // n: 1なら次へ、-1なら前へ
-    // isManual: 手動操作ならtrue、自動切り替えならfalse
     window.changeSlide = function(n, isManual) {
-        // 現在のスライド非表示
-        slides[slideIndex].classList.remove("active");
-        
-        // 次(または前)のスライドを計算
+        slides[slideIndex].classList.remove('active');
         slideIndex = (slideIndex + n + totalSlides) % totalSlides;
+        slides[slideIndex].classList.add('active');
+        if (isManual) resetAutoTimer();
+    };
 
-        // 新しいスライドを表示
-        slides[slideIndex].classList.add("active");
+    function showNextSlide() { changeSlide(1, false); }
 
-        // 手動クリック時だけタイマーをリセット（＝次の自動切り替えを「今から7秒後」にする）
-        if (isManual) {
-            resetAutoTimer();
-        }
+    function resetAutoTimer() {
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = setInterval(showNextSlide, 7000);
     }
 
-    // タイマーを再セットする関数
-    function resetAutoTimer(){
-        clearInterval(autoSlideTimer); 
-        autoSlideTimer = setInterval(showNextSlide, 7000); 
-    }
-
-    // ページ読み込み時に自動再生スタート
     resetAutoTimer();
-});
+})();
 
 
